@@ -23,7 +23,18 @@ Label 	Class
 
 https://complex-valued-neural-networks.readthedocs.io/en/latest/code_examples/fashion_mnist.html
 '''
-
+classes = [
+    'T-shirt/top',
+    'Trouser',
+    'Pullover',
+    'Dress',
+    'Coat',
+	'Sandal',
+    'Shirt',
+    'Sneaker',
+    'Bag',
+    'Ankle boot'
+]
 
 fashion_mnist = keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
@@ -39,7 +50,7 @@ model.compile(
     loss='sparse_categorical_crossentropy'
 )
 
-model.fit(train_images, train_labels, epochs=100)  # Fit the train images to the train labels in the given number of iterations.
+model.fit(train_images, train_labels, epochs=5)  # Fit the train images to the train labels in the given number of iterations.
 
 evaluation = model.evaluate(test_images, test_labels)
 
@@ -54,5 +65,8 @@ img = keras.utils.load_img(
 input_arr = np.array([keras.utils.img_to_array(img)])
 
 predictions = model.predict(input_arr)
-
+argmax = predictions.argmax()
+mx = predictions.max()
 print(f'Prediction: {predictions}')  # The right answer should be 8, a bag.
+print(f'Max value is {mx} at position {argmax}')
+print(f'The image is a {classes[argmax]}')
